@@ -1,0 +1,22 @@
+# 构建产物
+/build/
+/release/
+*.obj
+*.exe
+*.pdb
+*.exp
+*.lib
+*.res
+*.ilk
+
+# IDE / 编辑器
+.vs/
+.vscode/
+.trae/
+*.user
+*.suo
+*.slnx.sqlite
+
+# 系统
+Thumbs.db
+Desktop.ini

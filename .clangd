@@ -1,0 +1,14 @@
+# clangd 诊断配置：与 build.bat 的 MSVC 参数对齐
+CompileFlags:
+  Add:
+    - -DUNICODE
+    - -D_UNICODE
+    - -D_CRT_SECURE_NO_WARNINGS
+    - -Isrc
+    - -Ithird_party/cJSON
+    - -fms-extensions
+    - -fms-compatibility
+    - -Wno-deprecated-declarations
+Diagnostics:
+  # 项目有意直接 include 主头 app.h 与标准库头，关闭 IWYU 风格提示
+  UnusedIncludes: None
