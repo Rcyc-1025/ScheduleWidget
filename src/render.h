@@ -91,8 +91,10 @@ int  gfx_init(void);            /* 0 失败 */
 void gfx_shutdown(void);
 
 /* 字体缓存（按窗口 DPI 自动重建）
- * kind: RD_FONT_TITLE 标题15pt粗 / BODY 正文11pt / SMALL 小字9pt / DAY 日历10pt */
-enum { RD_FONT_TITLE = 0, RD_FONT_BODY, RD_FONT_SMALL, RD_FONT_DAY, RD_FONT_COUNT };
+ * kind: RD_FONT_TITLE 标题15pt粗 / BODY 正文11pt / SMALL 小字9pt / DAY 日历10pt /
+ *       LUNAR 农历行8pt */
+enum { RD_FONT_TITLE = 0, RD_FONT_BODY, RD_FONT_SMALL, RD_FONT_DAY, RD_FONT_LUNAR,
+       RD_FONT_COUNT };
 void *rd_font(HWND w, int kind);
 
 /* 文本绘制标志 */

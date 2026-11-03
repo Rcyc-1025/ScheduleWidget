@@ -28,7 +28,8 @@ static const struct { int pt, bold; } FONT_SPEC[RD_FONT_COUNT] = {
     { 15, 1 },   /* 标题 */
     { 11, 0 },   /* 正文 */
     {  9, 0 },   /* 小字 */
-    { 10, 0 }    /* 日历 */
+    { 10, 0 },   /* 日历 */
+    {  8, 0 }    /* 农历行 */
 };
 
 void *rd_font(HWND w, int kind)

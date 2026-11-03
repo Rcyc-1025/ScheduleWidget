@@ -11,6 +11,7 @@
 #include "storage.h"
 #include "theme.h"
 #include "lang.h"
+#include "lunar.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +29,9 @@
 #define BTN_SZ   30
 #define CAL_TH   30
 #define CAL_WH   22
-#define CAL_CELL 28
+#define CAL_CELL 34
+/* 日期格子内部分区：上半为日期数字（含今日/选中圈），下半为农历/节日小字 */
+#define CAL_NUM_H 22
 #define AG_HEAD  24
 #define CHIP_H   42
 #define CHIP_GAP 5
@@ -328,6 +331,7 @@ static void paint_calendar(GpGraphics *gfx, int cw, float sc)
     void *fd = rd_font(g.hwndMain, RD_FONT_DAY);
     void *fb = rd_font(g.hwndMain, RD_FONT_BODY);
     void *fs = rd_font(g.hwndMain, RD_FONT_SMALL);
+    void *fl = rd_font(g.hwndMain, RD_FONT_LUNAR);
 
     /* 月份切换行 */
     push_hit(HZ_CAL_PREV, 0, 6 * sc, y0, 26 * sc, 26 * sc);
@@ -393,6 +397,8 @@ static void paint_calendar(GpGraphics *gfx, int cw, float sc)
         }
     }
 
+    /* 农历小字只在中文界面显示；英文界面保持原样（不留空白行） */
+    int showLunar = (lang_current() == LANG_ZH);
     for (int cell = 0; cell < 42; cell++) {
         int day = 1 - offset + cell;
         if (day < 1 || day > dim) continue;
@@ -401,20 +407,29 @@ static void paint_calendar(GpGraphics *gfx, int cw, float sc)
         t64 d = tmk(s.calY, s.calM, day, 0, 0);
         int isToday = (d == today);
         int isSel = (d == s.calSel);
+        /* 中文界面把格子下半留给农历小字；英文界面数字仍居中整格 */
+        float numH = (showLunar ? (float)CAL_NUM_H : (float)CAL_CELL) * sc;
 
         wchar_t num[8];
         _snwprintf(num, 8, L"%d", day);
         if (isToday)
-            rd_circle(gfx, x + cellw / 2, y + (float)CAL_CELL * sc / 2, 10.5f * sc,
+            rd_circle(gfx, x + cellw / 2, y + numH / 2, 10.5f * sc,
                       COL_ACCENT, 0, 0);
         else if (isSel)
-            rd_circle(gfx, x + cellw / 2, y + (float)CAL_CELL * sc / 2, 11.5f * sc,
+            rd_circle(gfx, x + cellw / 2, y + numH / 2, 11.0f * sc,
                       0, COL_ACCENT, 1.5f);
         rd_text(gfx, num, fd, isToday ? 0xFFFFFFFF : COL_TXT,
-                x, y, cellw, (float)CAL_CELL * sc, RD_HCENTER | RD_VCENTER);
+                x, y, cellw, numH, RD_HCENTER | RD_VCENTER);
+        if (showLunar) {
+            wchar_t lun[16];
+            lunar_day_label(s.calY, s.calM, day, lun, 16);
+            rd_text(gfx, lun, fl, COL_SUB, x, y + numH, cellw,
+                    (float)(CAL_CELL - CAL_NUM_H) * sc, RD_HCENTER | RD_VCENTER);
+        }
+        /* 事件点移到格子右上角，避开农历行 */
         if (hasEv[day])
-            rd_circle(gfx, x + cellw / 2, y + (float)CAL_CELL * sc - 5 * sc,
-                      1.8f * sc, isToday ? 0xFFFFFFFF : COL_ACCENT, 0, 0);
+            rd_circle(gfx, x + cellw - 7 * sc, y + 6 * sc,
+                      1.8f * sc, COL_ACCENT, 0, 0);
 
         push_hit(HZ_CAL_DAY, day, x, y, cellw, (float)CAL_CELL * sc);
     }
