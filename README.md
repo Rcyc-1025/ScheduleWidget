@@ -35,7 +35,7 @@ schedule/
 ├── third_party/cJSON/    第三方 JSON 解析库（MIT，含 LICENSE）
 ├── tools/                自测程序与测试构建脚本
 ├── build.bat             一键构建脚本（自动探测 MSVC）
-├── LICENSE               项目许可（Mozilla Public License 2.0）
+├── LICENSE               项目许可（MIT）
 ├── .clangd               clangd 编辑器配置
 ├── compile_flags.txt     clangd 编译标志
 └── .gitignore
@@ -202,7 +202,7 @@ END:VCALENDAR
 
 ### 运行自测
 
-`tools/` 下包含 5 套自测（导入解析、全天事件、过期清理、xlsx 文本抽取、示范文件生成）。例如：
+`tools/` 下包含 6 套自测（导入解析、全天事件、过期清理、xlsx 文本抽取、示范文件生成、农历换算）。例如：
 
 ```bat
 tools\build_test.bat test_purge build\util.obj build\lang.obj
@@ -215,6 +215,7 @@ tools\build_test.bat test_purge build\util.obj build\lang.obj
 | test_import | `build\lang.obj build\util.obj` |
 | test_purge / test_allday | `build\util.obj build\lang.obj` |
 | test_extract / test_samples | `build\text_extract.obj build\lang.obj build\util.obj` |
+| test_lunar | 无 |
 
 ### 第三方组件
 
@@ -222,10 +223,9 @@ tools\build_test.bat test_purge build\util.obj build\lang.obj
 
 ### 许可
 
-本项目源码以 [Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/)（MPL 2.0）发布，完整文本见根目录 `LICENSE`。
+本项目源码以 [MIT License](https://opensource.org/licenses/MIT) 发布，Copyright (c) 2026 Rcyc-1025，完整文本见根目录 `LICENSE`。
 
-- 可自由使用、修改、分发（含商用），需保留版权与许可声明。
-- 修改本项目的源码文件须以 MPL 2.0 开源；与之结合的其他文件（Larger Work）可使用任意许可。
+- 可自由使用、修改、分发（含商用与闭源），需在副本或重要部分中保留版权与许可声明。
 - 本项目不提供任何担保，作者不承担因使用产生的任何责任。
 
 ---
@@ -261,7 +261,7 @@ schedule/
 ├── third_party/cJSON/    Third-party JSON parser (MIT, includes LICENSE)
 ├── tools/                Self-test programs and test build scripts
 ├── build.bat             One-click build script (auto-detects MSVC)
-├── LICENSE               Project license (Mozilla Public License 2.0)
+├── LICENSE               Project license (MIT)
 ├── .clangd               clangd editor config
 ├── compile_flags.txt     clangd compile flags
 └── .gitignore
@@ -428,7 +428,7 @@ To migrate or back up, simply copy the entire `ScheduleWidget` folder.
 
 ### Running Self-Tests
 
-The `tools/` directory contains 5 self-test suites (import parsing, all-day events, expiry cleanup, xlsx text extraction, sample file generation). For example:
+The `tools/` directory contains 6 self-test suites (import parsing, all-day events, expiry cleanup, xlsx text extraction, sample file generation, lunar calendar conversion). For example:
 
 ```bat
 tools\build_test.bat test_purge build\util.obj build\lang.obj
@@ -441,6 +441,7 @@ The script compiles and runs the test; "ALL PASS" means success. The 2nd and lat
 | test_import | `build\lang.obj build\util.obj` |
 | test_purge / test_allday | `build\util.obj build\lang.obj` |
 | test_extract / test_samples | `build\text_extract.obj build\lang.obj build\util.obj` |
+| test_lunar | — |
 
 ### Third-Party Components
 
@@ -448,8 +449,7 @@ The script compiles and runs the test; "ALL PASS" means success. The 2nd and lat
 
 ### License
 
-This project's source code is licensed under [Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/) (MPL 2.0). See the `LICENSE` file in the root directory for the full text.
+This project's source code is licensed under the [MIT License](https://opensource.org/licenses/MIT), Copyright (c) 2026 Rcyc-1025. See the `LICENSE` file in the root directory for the full text.
 
-- You are free to use, modify, and distribute (including commercially), provided you retain copyright and license notices.
-- Modified source files of this project must remain under MPL 2.0; other files combined into a Larger Work may use any license.
+- You are free to use, modify, and distribute (including commercially and in closed source), provided the copyright and license notices are retained in copies or substantial portions.
 - This project is provided "as is" without any warranty; the author assumes no liability for damages arising from its use.
