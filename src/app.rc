@@ -3,3 +3,33 @@
 
 1 ICON "app.ico"
 1 24 "app.manifest"
+
+1 VERSIONINFO
+ FILEVERSION 1,1,0,0
+ PRODUCTVERSION 1,1,0,0
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Rcyc-1025"
+            VALUE "FileDescription", "Schedule Widget"
+            VALUE "FileVersion", "1.1.0.0"
+            VALUE "InternalName", "ScheduleWidget"
+            VALUE "LegalCopyright", "Copyright (c) 2026 Rcyc-1025"
+            VALUE "OriginalFilename", "ScheduleWidget.exe"
+            VALUE "ProductName", "ScheduleWidget"
+            VALUE "ProductVersion", "1.1.0.0"
+            VALUE "Comments", "https://github.com/Rcyc-1025/ScheduleWidget"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

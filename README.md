@@ -66,6 +66,41 @@ release\ScheduleWidget.exe
 
 > 如果脚本提示找不到 vcvars64.bat，请确认已安装 MSVC C++ 工具链；也可在「x64 Native Tools Command Prompt for VS」中手动执行 `build.bat`。
 
+### 下载与 Windows SmartScreen
+
+从 GitHub Releases 用浏览器下载的 `ScheduleWidget.exe` 会被 Windows 标记为「来自 Internet」（Mark-of-the-Web）。由于本项目没有购买代码签名证书，首次运行未签名、尚无信誉记录的新文件时，SmartScreen 可能显示「Windows 已保护你的电脑」。这不是病毒告警：源码公开、可自行构建，Release 同时提供 `SHA256SUMS.txt` 供校验。
+
+任选一种方式运行：
+
+1. **直接运行**：点「更多信息」→「仍要运行」。
+2. **先解除锁定**（推荐，只需一次）：右键 exe → 属性 → 勾选「解除锁定」→ 确定；或在 PowerShell 中执行：
+   ```powershell
+   Unblock-File .\ScheduleWidget.exe
+   ```
+   仓库也提供脚本：
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File tools\unblock.ps1 -Path .\ScheduleWidget.exe
+   ```
+3. **命令行下载**（不产生 Mark-of-the-Web）：
+   ```powershell
+   Invoke-WebRequest -Uri https://github.com/Rcyc-1025/ScheduleWidget/releases/latest/download/ScheduleWidget.exe -OutFile ScheduleWidget.exe
+   Unblock-File .\ScheduleWidget.exe
+   .\ScheduleWidget.exe
+   ```
+   已安装 GitHub CLI 时也可以：
+   ```powershell
+   gh release download --repo Rcyc-1025/ScheduleWidget --pattern ScheduleWidget.exe
+   ```
+4. **从源码构建**：`build.bat` 生成的本地文件不会被标记。
+
+校验下载文件：
+
+```powershell
+Get-FileHash .\ScheduleWidget.exe -Algorithm SHA256
+```
+
+彻底消除「下载后首次运行」的提示只有两条路：使用受信任的代码签名证书（新证书仍需积累信誉，首次下载也可能提示），或上架 Microsoft Store。未签名的 exe 无法保证浏览器下载后零提示；不建议为了单个程序关闭系统级 SmartScreen。
+
 ### 使用说明
 
 运行后窗口出现在屏幕右下角，右键窗口或点击右上角「⋯」打开菜单：
@@ -291,6 +326,41 @@ release\ScheduleWidget.exe
 Double-click the exe to run — no installation, no additional DLLs required.
 
 > If the script cannot find vcvars64.bat, ensure MSVC C++ toolchain is installed; you can also run `build.bat` manually from "x64 Native Tools Command Prompt for VS".
+
+### Download & Windows SmartScreen
+
+An exe downloaded through a browser from GitHub Releases carries Mark-of-the-Web. Because this project does not have a code-signing certificate, the first run of an unsigned file with no reputation may trigger "Windows protected your PC". This is not a virus alert: the source is public, you can build it yourself, and each release includes `SHA256SUMS.txt` for verification.
+
+Choose one:
+
+1. **Run anyway**: click "More info" → "Run anyway".
+2. **Unblock once** (recommended): right-click the exe → Properties → check "Unblock" → OK; or in PowerShell:
+   ```powershell
+   Unblock-File .\ScheduleWidget.exe
+   ```
+   The repository also includes a helper script:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File tools\unblock.ps1 -Path .\ScheduleWidget.exe
+   ```
+3. **Command-line download** (no Mark-of-the-Web):
+   ```powershell
+   Invoke-WebRequest -Uri https://github.com/Rcyc-1025/ScheduleWidget/releases/latest/download/ScheduleWidget.exe -OutFile ScheduleWidget.exe
+   Unblock-File .\ScheduleWidget.exe
+   .\ScheduleWidget.exe
+   ```
+   With GitHub CLI installed:
+   ```powershell
+   gh release download --repo Rcyc-1025/ScheduleWidget --pattern ScheduleWidget.exe
+   ```
+4. **Build from source**: `build.bat` produces a local file without Mark-of-the-Web.
+
+Verify the download:
+
+```powershell
+Get-FileHash .\ScheduleWidget.exe -Algorithm SHA256
+```
+
+The only ways to remove the first-run download prompt entirely are a trusted code-signing certificate (a new certificate still has to build reputation, so the first downloads may still warn) or Microsoft Store distribution. An unsigned exe cannot guarantee a zero-prompt browser download; do not disable system-wide SmartScreen for one app.
 
 ### Usage
 
